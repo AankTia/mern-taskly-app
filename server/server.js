@@ -1,6 +1,5 @@
 import express from "express";
 import "dotenv/config";
-import { db } from "./libs/dbConnect.js";
 import userRoute from "./routes/user.route.js";
 import { errorHandler } from "./libs/middleware.js";
 

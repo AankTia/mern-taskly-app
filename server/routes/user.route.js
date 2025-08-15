@@ -3,7 +3,6 @@ import { test, getUser, updateUser, deleteUser } from '../controllers/user.contr
 
 const router = express.Router();
 
-router.get('/', test);
 router.get('/:id', getUser);
 router.patch('/update/:id', updateUser);
 router.delete('/delete/:id', deleteUser);

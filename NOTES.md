@@ -21,3 +21,10 @@
 - Run: `docker-compose up -d`
 - Access Mongo Express at http://localhost:8081
 Connect to MongoDB directly at `mongodb://admin:password123@localhost:27017`
+
+### Key Features:
+
+- **Persistent Storage**: Database data survives container restarts
+- **Network Isolation**: Both services run on a dedicated Docker network
+- **Auto-restart**: Containers restart automatically unless manually stopped
+- **Dependencies**: Mongo Express waits for MongoDB to start

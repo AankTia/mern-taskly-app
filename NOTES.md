@@ -20,7 +20,7 @@
 
 - Run: `docker-compose up -d`
 - Access Mongo Express at http://localhost:8081
-Connect to MongoDB directly at `mongodb://admin:password123@localhost:27017`
+  Connect to MongoDB directly at `mongodb://admin:password123@localhost:27017`
 
 ### Key Features:
 
@@ -28,3 +28,13 @@ Connect to MongoDB directly at `mongodb://admin:password123@localhost:27017`
 - **Network Isolation**: Both services run on a dedicated Docker network
 - **Auto-restart**: Containers restart automatically unless manually stopped
 - **Dependencies**: Mongo Express waits for MongoDB to start
+
+## Adding AUTH SECRET Environment Variable
+
+The AUTH_SECRET is an alphanumeric string used only in Express to sign the JWT. You can generate one by using the `openssl` command.
+
+Run the following command from the terminal:
+
+```
+openssl rand -base64 32
+```

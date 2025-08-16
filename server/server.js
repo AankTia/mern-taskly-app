@@ -4,12 +4,19 @@ import userRoute from "./routes/user.route.js";
 import { errorHandler } from "./libs/middleware.js";
 import authRouter from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
 const PORT = 8000;
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.use('api/v1/auth', authRouter);
 app.use("/api/v1/users", userRoute);

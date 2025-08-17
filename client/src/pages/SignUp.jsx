@@ -11,8 +11,8 @@ import { FormControl, FormErrorMessage } from "@chakra-ui/form-control";
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
-import { API_BASE_URL } from "../src/util";
-import { useUser } from "../src/context/UserContext";
+import { API_BASE_URL } from "../util.js";
+import { useUser } from "../context/UserContext.jsx";
 
 export default function SignUp() {
   const { updateUser } = useUser();

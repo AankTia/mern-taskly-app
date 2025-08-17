@@ -11,8 +11,8 @@ import {
 } from "@chakra-ui/react";
 import { FormControl, FormErrorMessage } from "@chakra-ui/form-control";
 import toast from "react-hot-toast";
-import { API_BASE_URL } from "../src/util.js";
-import { useUser } from "../src/context/UserContext";
+import { API_BASE_URL } from "../util.js";
+import { useUser } from "../context/UserContext.jsx";
 
 export default function SignIn() {
   const navigate = useNavigate();

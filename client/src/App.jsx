@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "../pages/Home";
-import SignIn from "../pages/SignIn";
-import SignUp from "../pages/SignUp";
+import Home from "../src/pages/Home.jsx";
+import SignIn from "../src/pages/SignIn";
+import SignUp from "../src/pages/SignUp";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { Toaster } from "react-hot-toast";
 import { UserProvider } from "./context/UserContext";
-import Profile from "../pages/Profile";
+import Profile from "../src/pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
 import NavBar from "./components/NavBar";
 

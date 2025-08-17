@@ -9,11 +9,13 @@ import {
 } from "@chakra-ui/react";
 import { FormControl, FormErrorMessage } from "@chakra-ui/form-control";
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
 import { API_BASE_URL } from "../src/util";
+import { useUser } from "../src/context/UserContext";
 
 export default function SignUp() {
+  const { updateUser } = useUser();
   const {
     handleSubmit,
     register,
@@ -31,8 +33,10 @@ export default function SignUp() {
       });
 
       const data = await res.json();
-      if (res.ok) {
+      if (res.status === 200) {
         toast.success('Sign Up successful! You are now logged in.');
+        updateUser(data);
+        useNavigate('/profile');
       } else {
         toast.error(data.message || 'Failed to create account');
       }

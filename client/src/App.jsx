@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { UserProvider } from "./context/UserContext";
 import Profile from "../pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
+import NavBar from "./components/NavBar";
 
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
     <UserProvider>
       <ChakraProvider value={defaultSystem}>
         <BrowserRouter>
+          <NavBar />
           <Toaster position="bottom-right" />
           <Routes>
             <Route path="/" element={<Home />} />

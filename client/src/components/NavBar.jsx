@@ -55,8 +55,8 @@ export default function NavBar() {
               <Portal>
                 <Menu.Positioner>
                   <Menu.Content>
-                    <Menu.Item value="profile">Profile</Menu.Item>
-                    <Menu.Item value="new-file">Tasks.</Menu.Item>
+                    <Menu.Item as={RouterLink} to='/profile'>Profile</Menu.Item>
+                    <Menu.Item as={RouterLink} to='/tasks'>Tasks</Menu.Item>
                     <Menu.Item onClick={handleSignOut}>Sign Out</Menu.Item>
                   </Menu.Content>
                 </Menu.Positioner>

@@ -7,7 +7,6 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-import { FormControl, FormErrorMessage } from "@chakra-ui/form-control";
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";

@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { useUser } from "../context/UserContext";
-import { API_BASE_URL } from "../util";
+import { useUser } from "../context/UserContext.jsx";
+import { API_BASE_URL } from "../util.js";
 import toast from "react-hot-toast";
 import {
   Box,
   Heading,
-  Center,
-  Image,
   Input,
   Stack,
   FormControl,
@@ -19,21 +17,20 @@ import {
   FormErrorMessage,
   useDisclosure,
 } from "@chakra-ui/react";
-// import { useDisclosure } from "@chakra-ui/react";
-import DeleteConfirmation from "../components/DeleteConfirmation";
-import { AvatarUploader } from "../components/AvatarUploader";
+import DeleteConfirmation from "../components/DeleteConfirmation.jsx";
+import { AvatarUploader } from "../components/AvatarUploader.jsx";
 
 export default function Profile() {
   const navigate = useNavigate();
   const { user, updateUser } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [ files, setFiles ] = useState(false);
+  const [files, setFiles] = useState(false);
 
   const {
-    control,
     register,
     handleSubmit,
     resetField,
+    control,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -43,18 +40,34 @@ export default function Profile() {
     },
   });
 
+  const handleFileUpload = async (files) => {
+    const formData = new FormData();
+    formData.append("image", files[0]);
+    try {
+      const res = await fetch(`${API_BASE_URL}/image/upload`, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
+      const response = await res.json();
+      return response.imageUrl;
+    } catch (error) {
+      console.log(error);
+      Throw(error);
+    }
+  };
+
   const doSubmit = async (values) => {
     try {
       if (files.length > 0) {
         const newUrl = await handleFileUpload(files);
-
         if (newUrl) {
           values.avatar = newUrl;
         }
       }
       // When the request is successful, we reset the password field from the form,
       // update the user context data, and show a success toast
-      const res = await fetch(`${API_BASE_URL}/users/update${user._id}`, {
+      const res = await fetch(`${API_BASE_URL}/users/update/${user._id}`, {
         method: "PATCH",
         credentials: "include",
         headers: {
@@ -62,10 +75,10 @@ export default function Profile() {
         },
         body: JSON.stringify(values),
       });
-
       const data = await res.json();
       if (res.status === 200) {
-        resetField("password"), updateUser(data);
+        resetField("password");
+        updateUser(data);
         toast.success("Profile Updated");
       } else {
         toast.error(data.message);
@@ -81,7 +94,6 @@ export default function Profile() {
         method: "DELETE",
         credentials: "include",
       });
-
       const data = await res.json();
       if (res.status === 200) {
         toast.success(data.message);
@@ -91,7 +103,7 @@ export default function Profile() {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Delete Error : ", error);
+      toast.error("Delete Error: ", error);
     }
   };
 
@@ -100,33 +112,12 @@ export default function Profile() {
       const res = await fetch(`${API_BASE_URL}/auth/signout`, {
         credentials: "include",
       });
-
       const data = await res.json();
       toast.success(data.message);
       updateUser(null);
       navigate("/");
     } catch (error) {
       toast.error(error);
-    }
-  };
-
-  const handleFileUpload = async (files) => {
-    const formData = new FormData();
-    formData.append("image", files[0]);
-
-    try {
-      const res = await fetch(`${API_BASE_URL}/image/upload`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
-
-      const response = await res.json();
-
-      return response.imageUrl;
-    } catch (error) {
-      console.log(error);
-      Throw(error);
     }
   };
 
@@ -149,24 +140,18 @@ export default function Profile() {
       </Heading>
       <form onSubmit={handleSubmit(doSubmit)}>
         <Stack gap="4">
-          <Center>
-            <form onSubmit={handleSubmit(doSubmit)}>
-              <Stack gap="4">
-                <Controller 
-                  name="avatar"
-                  control={control}
-                  rules={ {required: true}}
-                  render={({ field }) => (
-                    <AvatarUploader
-                      onFieldChange={field.onChange}
-                      imageUrl={field.value}
-                      setFiles={setFiles}
-                    />
-                  )}
-                />
-              </Stack>
-            </form>
-          </Center>
+          <Controller
+            name="avatar"
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <AvatarUploader
+                onFieldChange={field.onChange}
+                imageUrl={field.value}
+                setFiles={setFiles}
+              />
+            )}
+          />
           <FormControl isInvalid={errors.username}>
             <Input
               id="username"

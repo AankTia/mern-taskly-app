@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import TasksSkeleton from "../_skeletons/TasksSkeleton";
 import Pagination from "../components/pagination.jsx";
+import { BsArrowUp } from "react-icons/bs";
 
 export default function Tasks() {
   const { user } = useUser();
@@ -30,7 +31,7 @@ export default function Tasks() {
   useEffect(() => {
     const fetchTasks = async () => {
       const query = searchParams.size ? "?" + searchParams.toString() : "";
-      const res = await fetch(`${API_BASE_URL}/tasks/user/${user._id}`, {
+      const res = await fetch(`${API_BASE_URL}/tasks/user/${user._id}${query}`, {
         credentials: "include",
       });
       const { tasks, taskCount } = await res.json();
@@ -49,6 +50,11 @@ export default function Tasks() {
       searchParams.delete("status");
     }
 
+    setSearchParams(searchParams);
+  };
+
+  const handleOrderBy = (value) => {
+    searchParams.set("orderBy", value);
     setSearchParams(searchParams);
   };
 
@@ -89,10 +95,36 @@ export default function Tasks() {
         <Table px="3" border="2px solid" borderColor="gray.100">
           <Thead backgroundColor="gray.100">
             <Tr>
-              <Th>Task</Th>
-              <Th>Priority</Th>
-              <Th>Status</Th>
-              <Th>Due Date</Th>
+              <Th>
+                <Flex
+                  onClick={() => handleOrderBy("name")}
+                  cursor="pointer"
+                  alignItems="center"
+                >
+                  Task {searchParams.get("orderBy") === "name" && <BsArrowUp />}
+                </Flex>
+              </Th>
+              <Th>
+                <Flex
+                  onClick={() => handleOrderBy("priority")}
+                  cursor="pointer"
+                >
+                  Priority Task{" "}
+                  {searchParams.get("orderBy") === "priotity" && <BsArrowUp />}
+                </Flex>
+              </Th>
+              <Th>
+                <Flex onClick={() => handleOrderBy("status")} cursor="pointer">
+                  Status Task{" "}
+                  {searchParams.get("orderBy") === "status" && <BsArrowUp />}
+                </Flex>
+              </Th>
+              <Th>
+                <Flex onClick={() => handleOrderBy("due")} cursor="pointer">
+                  Due Date Task{" "}
+                  {searchParams.get("orderBy") === "due" && <BsArrowUp />}
+                </Flex>
+              </Th>
             </Tr>
           </Thead>
 

@@ -9,13 +9,15 @@ export const getTasksByUser = async (req, res, next) => {
     const pageSize = 4;
     const query = { owner: new ObjectId(req.params.id) };
 
-    const { status } = req.query;
+    const { status, orderBy } = req.query;
+    const sort = orderBy ? { [orderBy]: 1 } : {};
     if (status) {
       query["status"] = status;
     }
 
     const tasks = await collection
       .find(query)
+      .sort(sort)
       .limit(pageSize)
       .skip((page - 1) * pageSize)
       .toArray();

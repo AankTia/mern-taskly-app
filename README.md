@@ -6,6 +6,9 @@
 [![Express](https://img.shields.io/badge/Express.js-4.x-lightgrey?logo=express)](https://expressjs.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+
+![MERN Learning Banner](assets/mern-banner.png)
+
 I’m learning how to build a full-stack web application using the **MERN stack (MongoDB, Express.js, React, Node.js)** by following the _MERN Stack Web Development For Beginners_ book.
 
 A full-stack web application built with the **MERN stack** (MongoDB, Express.js, React, Node.js).

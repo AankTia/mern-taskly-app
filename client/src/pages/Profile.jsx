@@ -10,13 +10,15 @@ import {
   Image,
   Input,
   Stack,
+  FormControl,
   Button,
   Link,
   Flex,
   Text,
+  FormErrorMessage,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { FormControl, FormErrorMessage } from "@chakra-ui/form-control";
-import { useDisclosure } from "@chakra-ui/react";
+// import { useDisclosure } from "@chakra-ui/react";
 import DeleteConfirmation from "../components/DeleteConfirmation";
 
 export default function Profile() {
@@ -98,41 +100,38 @@ export default function Profile() {
   };
 
   return (
-    <Box p={"3"} maxW={"lg"} mx={"auto"}>
+    <Box p="3" maxW="lg" mx="auto">
       <DeleteConfirmation
         alertTitle="Delete Account"
         handleClick={handleDeleteUser}
         isOpen={isOpen}
         onClose={onClose}
       />
-
       <Heading
-        as={"h1"}
-        fontSize={"3xl"}
-        fontWeight={"semibold"}
-        textAlign={"center"}
-        my={"7"}
+        as="h1"
+        fontSize="3xl"
+        fontWeight="semibold"
+        textAlign="center"
+        my="7"
       >
         Your Profile
       </Heading>
-
       <form onSubmit={handleSubmit(doSubmit)}>
-        <Stack gap={"4"}>
+        <Stack gap="4">
           <Center>
             <Image
               alt="profile"
-              rounded={"full"}
-              h={"24"}
-              w={"24"}
-              objectFit={"cover"}
-              cursor={"pointer"}
-              mt={"2"}
+              rounded="full"
+              h="24"
+              w="24"
+              objectFit="cover"
+              cursor="pointer"
+              mt="2"
               src={user.avatar}
             />
           </Center>
-
           <FormControl isInvalid={errors.username}>
-            <input
+            <Input
               id="username"
               type="text"
               placeholder="username"
@@ -142,7 +141,6 @@ export default function Profile() {
               {errors.username && errors.username.message}
             </FormErrorMessage>
           </FormControl>
-
           <FormControl isInvalid={errors.email}>
             <Input
               id="email"
@@ -154,7 +152,6 @@ export default function Profile() {
               {errors.email && errors.email.message}
             </FormErrorMessage>
           </FormControl>
-
           <FormControl isInvalid={errors.password}>
             <Input
               id="password"
@@ -166,59 +163,49 @@ export default function Profile() {
               {errors.password && errors.password.message}
             </FormErrorMessage>
           </FormControl>
-
           <Button
             type="submit"
             isLoading={isSubmitting}
-            colorScheme={"blue"}
-            textTransform={"uppercase"}
+            colorScheme="teal"
+            textTransform="uppercase"
           >
             Update Profile
           </Button>
         </Stack>
       </form>
-
-      <Stack gap={"4"} mt={"5"}>
+      <Stack gap="4" mt="5">
         <Link
           as={RouterLink}
           to="/create-task"
-          p={"2"}
-          bg={"green.500"}
-          rounded={"lg"}
-          textTransform={"uppercase"}
-          textAlign={"center"}
-          textColor={"white"}
-          fontWeight={"semibold"}
+          p="2"
+          bg="green.500"
+          rounded="lg"
+          textTransform="uppercase"
+          textAlign="center"
+          textColor="white"
+          fontWeight="semibold"
           _hover={{ bg: "green.600" }}
         >
           Create New Task
         </Link>
-
-        <Flex justify={"space-between"}>
-          <Text
-            as={"span"}
-            color={"red.600"}
-            cursor={"pointer"}
-            onClick={onOpen}
-          >
+        <Flex justify="space-between">
+          <Text as="span" color="red.600" cursor="pointer" onClick={onOpen}>
             Delete Account
           </Text>
-
           <Text
-            as={"span"}
-            color={"red.600"}
-            cursor={"pointer"}
+            as="span"
+            color="red.600"
+            cursor="pointer"
             onClick={handleSignOut}
           >
             Sign Out
           </Text>
         </Flex>
-
-        <Text textAlign={"center"}>
+        <Text textAlign="center">
           <Link
             as={RouterLink}
             to="/tasks"
-            color={"blue"}
+            color="teal"
             _hover={{ textDecor: "none" }}
           >
             Show Tasks

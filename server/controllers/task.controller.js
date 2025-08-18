@@ -5,11 +5,19 @@ const collection = db.collection("tasks");
 
 export const getTasksByUser = async (req, res, next) => {
   try {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = 4;
     const query = { owner: new ObjectId(req.params.id) };
 
-    const tasks = await collection.find(query).toArray();
+    const tasks = await collection
+      .find(query)
+      .limit(pageSize)
+      .skip((page - 1) * pageSize)
+      .toArray();
 
-    res.status(200).json({ tasks });
+    const taskCount = await collection.count(query);
+
+    res.status(200).json({ tasks, taskCount });
   } catch (error) {
     console.log(`getTasksByUser Params: ${req.params}`);
     next({ status: 500, error });

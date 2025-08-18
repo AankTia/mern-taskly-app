@@ -21,18 +21,15 @@ import TasksSkeleton from "../_skeletons/TasksSkeleton";
 
 export default function Tasks() {
   const { user } = useUser();
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState();
 
   useEffect(() => {
     const fetchTasks = async () => {
-      console.log(API_BASE_URL)
       const res = await fetch(`${API_BASE_URL}/tasks/user/${user._id}`, {
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
       const { tasks } = await res.json();
+      setTasks(tasks);
     };
     fetchTasks();
   }, []);

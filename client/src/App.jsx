@@ -28,7 +28,7 @@ export default function App() {
 
             <Route element={<PrivateRoute />}>
               <Route path="/profile" element={<Profile />} />
-              <Route path="/create-tasks" element={<CreateTask />} />
+              <Route path="/create-task" element={<CreateTask />} />
               <Route path="/update-task/:taskId" element={<UpdateTask />} />
               <Route path="/tasks" element={<Tasks />} />
               <Route path="/tasks/:taskId" element={<SingleTask />} />

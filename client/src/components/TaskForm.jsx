@@ -1,5 +1,5 @@
 import DatePicker from "react-date-picker";
-// import "react-date-picker/dist/react-datepicker.css";
+import "react-date-picker/dist/DatePicker.css";
 import { useForm, Controller } from "react-hook-form";
 import { API_BASE_URL } from "../util";
 import { toast } from "react-hot-toast";

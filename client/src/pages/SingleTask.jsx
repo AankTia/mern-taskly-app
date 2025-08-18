@@ -19,8 +19,7 @@ import DeleteConfirmation from "../components/DeleteConfirmation";
 import toast from "react-hot-toast";
 
 export default function SingleTask() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [task, setTask] = useState;
+  const [task, setTask] = useState();
   const { taskId } = useParams();
   const navigate = useNavigate();
 

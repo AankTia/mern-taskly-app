@@ -40,6 +40,18 @@ export default function Tasks() {
     fetchTasks();
   }, [searchParams]);
 
+  const handleStatusFilter = (e) => {
+    const value = e.target.value;
+
+    if (value) {
+      searchParams.set("status", value);
+    } else {
+      searchParams.delete("status");
+    }
+
+    setSearchParams(searchParams);
+  };
+
   if (!tasks) {
     return <TasksSkeleton />;
   }
@@ -58,7 +70,7 @@ export default function Tasks() {
 
       <Flex justify="space-between" mb="3">
         <Box w="100px">
-          <Select placeholder="All">
+          <Select placeholder="All" onChange={handleStatusFilter}>
             <option value="open">Open</option>
             <option value="done">Done</option>
           </Select>

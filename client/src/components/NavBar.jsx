@@ -57,7 +57,7 @@ export default function NavBar() {
                   <Menu.Content>
                     <Menu.Item value="profile">Profile</Menu.Item>
                     <Menu.Item value="new-file">Tasks.</Menu.Item>
-                    <Menu.Item value="new-win">Sign Out</Menu.Item>
+                    <Menu.Item onClick={handleSignOut}>Sign Out</Menu.Item>
                   </Menu.Content>
                 </Menu.Positioner>
               </Portal>

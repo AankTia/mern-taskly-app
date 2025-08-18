@@ -9,7 +9,6 @@ import {
   Heading,
   Stack,
 } from "@chakra-ui/react";
-import { FormControl, FormErrorMessage } from "@chakra-ui/form-control";
 import toast from "react-hot-toast";
 import { API_BASE_URL } from "../util.js";
 import { useUser } from "../context/UserContext.jsx";

@@ -118,7 +118,12 @@ node seed.js
 Create a `.env` file inside the `server/` folder:
 
 ```env
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/mern_app
-JWT_SECRET=your_secret_key
+MONGODB_URI=mongodb://admin:password123@localhost:27018?authSource=admin
+MONGODB_DATABASE=mern-taskly-app
+VITE_API_BASE_URL=http://localhost:8000/api/v1
+AUTH_SECRET=IJg48A77uTuRBUu69ETklRvK/ywsFsnGg9NHQ96yd+Y=
+CLIENT_URL=http://localhost:5173
+CLOUDINARY_CLOUD_NAME=your_claoudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```

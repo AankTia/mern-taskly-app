@@ -1,7 +1,7 @@
 import DatePicker from "react-date-picker";
-import "react-date-picker/dist/react-datepicker.css";
+// import "react-date-picker/dist/react-datepicker.css";
 import { useForm, Controller } from "react-hook-form";
-import { API_BASE_URL, SERVER_BASE_URL } from "../util";
+import { API_BASE_URL } from "../util";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import {
@@ -55,7 +55,7 @@ export default function TaskForm({ type, task }) {
 
     if (type === "update") {
       delete values._id;
-      const res = await fetch(`${SERVER_BASE_URL}/tasks/${task._id}`, {
+      const res = await fetch(`${API_BASE_URL}/tasks/${task._id}`, {
         method: "PATCH",
         credentials: "include",
         headers: {

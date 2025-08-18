@@ -8,6 +8,10 @@ import { UserProvider } from "./context/UserContext";
 import Profile from "../src/pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
 import NavBar from "./components/NavBar";
+import CreateTask from "./pages/CreateTask.jsx";
+import UpdateTask from "./pages/UpdateTask.jsx";
+import Tasks from "./pages/Tasks.jsx";
+import SingleTask from "./pages/SingleTask.jsx";
 
 
 export default function App() {
@@ -24,6 +28,10 @@ export default function App() {
 
             <Route element={<PrivateRoute />}>
               <Route path="/profile" element={<Profile />} />
+              <Route path="/create-tasks" element={<CreateTask />} />
+              <Route path="/update-task/:taskId" element={<UpdateTask />} />
+              <Route path="/tasks" element={<Tasks />} />
+              <Route path="/tasks/:taskId" element={<SingleTask />} />
             </Route>
           </Routes>
         </BrowserRouter>

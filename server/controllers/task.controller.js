@@ -5,12 +5,13 @@ const collection = db.collection("tasks");
 
 export const getTasksByUser = async (req, res, next) => {
   try {
-    const query = { owner: new ObjectId(req.paramas.id) };
+    const query = { owner: new ObjectId(req.params.id) };
 
     const tasks = await collection.find(query).toArray();
 
     res.status(200).json({ tasks });
   } catch (error) {
+    console.log(`getTasksByUser Params: ${req.params}`);
     next({ status: 500, error });
   }
 };

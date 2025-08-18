@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../src/pages/Home.jsx";
 import SignIn from "../src/pages/SignIn";
 import SignUp from "../src/pages/SignUp";
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { Toaster } from "react-hot-toast";
 import { UserProvider } from "./context/UserContext";
 import Profile from "../src/pages/Profile";
@@ -17,7 +17,7 @@ import SingleTask from "./pages/SingleTask.jsx";
 export default function App() {
   return (
     <UserProvider>
-      <ChakraProvider value={defaultSystem}>
+      <ChakraProvider>
         <BrowserRouter>
           <NavBar />
           <Toaster position="bottom-right" />

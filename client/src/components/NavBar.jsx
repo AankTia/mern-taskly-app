@@ -2,7 +2,17 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useUser } from "../context/UserContext.jsx";
 import { API_BASE_URL } from "../util.js";
-import { Box, Flex, Menu, Spacer, Link, Button, Image, Text, Portal } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  Spacer,
+  Link,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Image,
+} from "@chakra-ui/react";
 
 export default function NavBar() {
   const { user, updateUser } = useUser();
@@ -36,32 +46,28 @@ export default function NavBar() {
             Taskly
           </Link>
         </Box>
-
         <Spacer />
-
         <Box>
           {user ? (
-            <Menu.Root>
-              <Menu.Trigger asChild>
-                <Button variant="outline" size="sm">
-                  <Image
-                    boxSize="40px"
-                    borderRadius="full"
-                    src={user.avatar}
-                    alt={user.username}
-                  />
-                </Button>
-              </Menu.Trigger>
-              <Portal>
-                <Menu.Positioner>
-                  <Menu.Content>
-                    <Menu.Item as={RouterLink} to='/profile'>Profile</Menu.Item>
-                    <Menu.Item as={RouterLink} to='/tasks'>Tasks</Menu.Item>
-                    <Menu.Item onClick={handleSignOut}>Sign Out</Menu.Item>
-                  </Menu.Content>
-                </Menu.Positioner>
-              </Portal>
-            </Menu.Root>
+            <Menu>
+              <MenuButton>
+                <Image
+                  boxSize="40px"
+                  borderRadius="full"
+                  src={user.avatar}
+                  alt={user.username}
+                />
+              </MenuButton>
+              <MenuList>
+                <MenuItem as={RouterLink} to="/profile">
+                  Profile
+                </MenuItem>
+                <MenuItem as={RouterLink} to="/tasks">
+                  Tasks
+                </MenuItem>
+                <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+              </MenuList>
+            </Menu>
           ) : (
             <Link as={RouterLink} to="/signin">
               Sign In

@@ -71,7 +71,11 @@ export const signin = async (req, res, next) => {
     const { password: pass, updatedAt, createdAt, ...rest } = validUser;
 
     res
-      .cookie('taskly_token', token, { httpOnly: true })
+      .cookie("taskly_token", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+      })
       .status(200)
       .json(rest);
   } catch (error) {

@@ -20,7 +20,7 @@ import {
 
 export default function Tasks() {
   const { user } = useUser();
-  const [task, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -28,7 +28,6 @@ export default function Tasks() {
         credentials: "include",
       });
       const { tasks } = await res.json();
-      setTasks(tasks);
     };
     fetchTasks();
   }, []);
@@ -74,7 +73,7 @@ export default function Tasks() {
           </Thead>
 
           <Tbody>
-            {task.map((task) => (
+            {tasks.map((task) => (
               <Tr key={task._id}>
                 <Td>
                   <Link to={`/tasks/${task._id}`}>{task.name}</Link>

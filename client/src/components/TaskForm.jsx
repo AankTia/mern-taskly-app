@@ -43,7 +43,6 @@ export default function TaskForm({ type, task }) {
         },
         body: JSON.stringify(values),
       });
-
       const response = await res.json();
       if (res.status === 200) {
         toast.success(`New Task Created: ${values.name}`);
@@ -63,9 +62,7 @@ export default function TaskForm({ type, task }) {
         },
         body: JSON.stringify(values),
       });
-
       const response = await res.json();
-
       if (res.status === 200) {
         toast.success(`Task Updated: ${values.name}`);
         navigate(`/tasks/${task._id}`);
@@ -109,7 +106,7 @@ export default function TaskForm({ type, task }) {
           <FormControl isInvalid={errors.priority}>
             <Select
               placeholder="Priority"
-              {...register("priority", { required: "Prioroty is required" })}
+              {...register("priority", { required: "Priority is required" })}
             >
               <option value="urgent">Urgent</option>
               <option value="not urgent">Not Urgent</option>
@@ -130,8 +127,13 @@ export default function TaskForm({ type, task }) {
               {errors.status && errors.status.message}
             </FormErrorMessage>
           </FormControl>
-          <FormControl>
-            <DatePickerStyles />
+          <FormControl
+            sx={{
+              ".react-datepicker-wrapper": {
+                width: "100%",
+              },
+            }}
+          >
             <Controller
               control={control}
               name="due"
@@ -142,7 +144,7 @@ export default function TaskForm({ type, task }) {
                   {...field}
                   selected={field.value}
                   showTimeSelect
-                  timeInputLabel="Time"
+                  timeInputLabel="Time:"
                   dateFormat="MM/dd/yyyy h:mm aa"
                   placeholderText="Due Date (Optional)"
                 />
@@ -154,7 +156,9 @@ export default function TaskForm({ type, task }) {
             isLoading={isSubmitting}
             colorScheme="teal"
             textTransform="uppercase"
-          ></Button>
+          >
+            Submit
+          </Button>
         </Flex>
       </Stack>
     </form>

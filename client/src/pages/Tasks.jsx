@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
-import { API_BASE_URL } from "../util";
+import { API_BASE_URL } from "../util.js";
 import { Link } from "react-router-dom";
 import {
   Badge,
@@ -25,8 +25,12 @@ export default function Tasks() {
 
   useEffect(() => {
     const fetchTasks = async () => {
+      console.log(API_BASE_URL)
       const res = await fetch(`${API_BASE_URL}/tasks/user/${user._id}`, {
         credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
       const { tasks } = await res.json();
     };

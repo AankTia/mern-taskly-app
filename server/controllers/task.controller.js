@@ -1,4 +1,4 @@
-import { db } from "../db";
+import { db } from "../libs/dbConnect.js";
 import { ObjectId } from "mongodb";
 
 const collection = db.collection("tasks");
@@ -25,7 +25,7 @@ export const getTask = async (req, res, next) => {
       return res.status(404).json({ message: "Task not found" });
     }
 
-    res.status(200).json(task );
+    res.status(200).json(task);
   } catch (error) {
     next({ status: 500, error });
   }
@@ -71,7 +71,7 @@ export const deleteTask = async (req, res, next) => {
     const query = { _id: new ObjectId(req.params.id) };
 
     await collection.deleteOne(query);
-    
+
     res.status(200).json({ message: "Task deleted successfully" });
   } catch (error) {
     next({ status: 500, error });

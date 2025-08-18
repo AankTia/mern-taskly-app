@@ -1,6 +1,6 @@
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { API_BASE_URL } from "../util";
+import { API_BASE_URL } from "../util.js";
 import {
   Badge,
   Box,
@@ -14,8 +14,12 @@ import {
 } from "@chakra-ui/react";
 import SingleTaskSkeleton from "../_skeletons/SingleTaskSkeleton";
 import { BsChevronLeft } from "react-icons/bs";
+import { useDisclosure } from "@chakra-ui/react";
+import DeleteConfirmation from "../components/DeleteConfirmation";
+import toast from "react-hot-toast";
 
 export default function SingleTask() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [task, setTask] = useState;
   const { taskId } = useParams();
   const navigate = useNavigate();
@@ -30,6 +34,19 @@ export default function SingleTask() {
     };
     fetchTask();
   });
+
+  const handleDeleteTask = async () => {
+    const res = await fetch(`${API_BASE_URL}/tasks/${taskId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+    const data = await res.json();
+    if (res.status === 200) {
+      toast.success(data.message);
+    } else {
+      toast.error(data.message);
+    }
+  };
 
   if (!task) {
     return <SingleTaskSkeleton />;
@@ -59,24 +76,30 @@ export default function SingleTask() {
         </Badge>
         {task.due && <Text>{new Date(task.due).toLocaleDateString()}</Text>}
       </Stack>
-      <Card mt='4' border='1px solid' borderColor='gray.200'>
+      <Card mt="4" border="1px solid" borderColor="gray.200">
         <CardBody>
           <Text>{task.description}</Text>
         </CardBody>
       </Card>
-      <Flex justify='space-between' mt='5'>
-        <Text as='span' color='red.600'>
+      <Flex justify="space-between" mt="5">
+        <Text as="span" color="red.600" cursor='pointer' onClick={onOpen}>
           Detele Task
         </Text>
         <Link
           as={RouterLink}
           to={`/update-task/${task._id}`}
-          color='teal'
-          _hover={{textDecor: 'none'}}
+          color="teal"
+          _hover={{ textDecor: "none" }}
         >
           Edit Task
         </Link>
       </Flex>
+      <DeleteConfirmation
+        alertTitle="Delete Task"
+        handleClick={handleDeleteTask}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
     </Box>
   );
 }

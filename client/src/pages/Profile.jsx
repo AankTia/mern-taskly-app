@@ -1,9 +1,9 @@
-import { useForm } from 'react-hook-form';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useUser } from '../context/UserContext';
-import { API_BASE_URL } from '../util';
-import toast from 'react-hot-toast';
-import { 
+import { useForm } from "react-hook-form";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
+import { API_BASE_URL } from "../util";
+import toast from "react-hot-toast";
+import {
   Box,
   Heading,
   Center,
@@ -14,12 +14,15 @@ import {
   Link,
   Flex,
   Text,
-} from '@chakra-ui/react';
-import { FormControl, FormErrorMessage } from '@chakra-ui/form-control';
+} from "@chakra-ui/react";
+import { FormControl, FormErrorMessage } from "@chakra-ui/form-control";
+import { useDisclosure } from "@chakra-ui/react";
+import DeleteConfirmation from "../components/DeleteConfirmation";
 
 export default function Profile() {
   const navigate = useNavigate();
   const { user, updateUser } = useUser();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
     register,
@@ -30,104 +33,110 @@ export default function Profile() {
     defaultValues: {
       avatar: user.avatar,
       username: user.username,
-      email: user.email
-    }
+      email: user.email,
+    },
   });
 
-  const doSubmit = async values => {
+  const doSubmit = async (values) => {
     try {
-      // When the request is successful, we reset the password field from the form, 
+      // When the request is successful, we reset the password field from the form,
       // update the user context data, and show a success toast
       const res = await fetch(`${API_BASE_URL}/users/update${user._id}`, {
-        method: 'PATCH',
-        credentials: 'include',
+        method: "PATCH",
+        credentials: "include",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
 
       const data = await res.json();
-      if(res.status === 200) {
-        resetField('password'),
-        updateUser(data);
-        toast.success('Profile Updated');
+      if (res.status === 200) {
+        resetField("password"), updateUser(data);
+        toast.success("Profile Updated");
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error('Profile Update Error: ', error)
+      toast.error("Profile Update Error: ", error);
     }
   };
 
   const handleDeleteUser = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/users/delete/${user._id}`, {
-        method: 'DELETE',
-        credentials: 'include'
+        method: "DELETE",
+        credentials: "include",
       });
 
       const data = await res.json();
       if (res.status === 200) {
         toast.success(data.message);
         updateUser(null);
-        navigate('/');
+        navigate("/");
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error('Delete Error : ', error);
+      toast.error("Delete Error : ", error);
     }
-  }
+  };
 
   const handleSignOut = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/auth/signout`, {
-        credentials: 'include'
+        credentials: "include",
       });
 
       const data = await res.json();
       toast.success(data.message);
       updateUser(null);
-      navigate('/');
+      navigate("/");
     } catch (error) {
       toast.error(error);
     }
-  }
+  };
 
   return (
-    <Box p={'3'} maxW={'lg'} mx={'auto'}>
+    <Box p={"3"} maxW={"lg"} mx={"auto"}>
+      <DeleteConfirmation
+        alertTitle="Delete Account"
+        handleClick={handleDeleteUser}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
+
       <Heading
-        as={'h1'}
-        fontSize={'3xl'}
-        fontWeight={'semibold'}
-        textAlign={'center'}
-        my={'7'}
+        as={"h1"}
+        fontSize={"3xl"}
+        fontWeight={"semibold"}
+        textAlign={"center"}
+        my={"7"}
       >
         Your Profile
       </Heading>
 
       <form onSubmit={handleSubmit(doSubmit)}>
-        <Stack gap={'4'}>
+        <Stack gap={"4"}>
           <Center>
             <Image
-              alt='profile'
-              rounded={'full'}
-              h={'24'}
-              w={'24'}
-              objectFit={'cover'}
-              cursor={'pointer'}
-              mt={'2'}
+              alt="profile"
+              rounded={"full"}
+              h={"24"}
+              w={"24"}
+              objectFit={"cover"}
+              cursor={"pointer"}
+              mt={"2"}
               src={user.avatar}
             />
           </Center>
 
           <FormControl isInvalid={errors.username}>
-            <input 
-              id='username'
-              type='text'
-              placeholder='username'
-              {...register('username', {required: 'Username is required'})}
+            <input
+              id="username"
+              type="text"
+              placeholder="username"
+              {...register("username", { required: "Username is required" })}
             />
             <FormErrorMessage>
               {errors.username && errors.username.message}
@@ -135,11 +144,11 @@ export default function Profile() {
           </FormControl>
 
           <FormControl isInvalid={errors.email}>
-            <Input 
-              id='email'
-              type='email'
-              placeholder='email'
-              {...register('email', {required: 'Email is required'})}
+            <Input
+              id="email"
+              type="email"
+              placeholder="email"
+              {...register("email", { required: "Email is required" })}
             />
             <FormErrorMessage>
               {errors.email && errors.email.message}
@@ -147,11 +156,11 @@ export default function Profile() {
           </FormControl>
 
           <FormControl isInvalid={errors.password}>
-            <Input 
-              id='password'
-              type='password'
-              placeholder='New password'
-              {...register('password', {required: 'Password is required'})}
+            <Input
+              id="password"
+              type="password"
+              placeholder="New password"
+              {...register("password", { required: "Password is required" })}
             />
             <FormErrorMessage>
               {errors.password && errors.password.message}
@@ -159,58 +168,58 @@ export default function Profile() {
           </FormControl>
 
           <Button
-            type='submit'
+            type="submit"
             isLoading={isSubmitting}
-            colorScheme={'blue'}
-            textTransform={'uppercase'}
+            colorScheme={"blue"}
+            textTransform={"uppercase"}
           >
             Update Profile
           </Button>
         </Stack>
       </form>
 
-      <Stack gap={'4'} mt={'5'}>
+      <Stack gap={"4"} mt={"5"}>
         <Link
           as={RouterLink}
-          to='/create-task'
-          p={'2'}
-          bg={'green.500'}
-          rounded={'lg'}
-          textTransform={'uppercase'}
-          textAlign={'center'}
-          textColor={'white'}
-          fontWeight={'semibold'}
-          _hover={{bg: 'green.600'}}
+          to="/create-task"
+          p={"2"}
+          bg={"green.500"}
+          rounded={"lg"}
+          textTransform={"uppercase"}
+          textAlign={"center"}
+          textColor={"white"}
+          fontWeight={"semibold"}
+          _hover={{ bg: "green.600" }}
         >
           Create New Task
         </Link>
 
-        <Flex justify={'space-between'}>
+        <Flex justify={"space-between"}>
           <Text
-            as={'span'}
-            color={'red.600'}
-            cursor={'pointer'}
-            onClick={handleDeleteUser}
+            as={"span"}
+            color={"red.600"}
+            cursor={"pointer"}
+            onClick={onOpen}
           >
             Delete Account
           </Text>
 
           <Text
-            as={'span'}
-            color={'red.600'}
-            cursor={'pointer'}
+            as={"span"}
+            color={"red.600"}
+            cursor={"pointer"}
             onClick={handleSignOut}
           >
             Sign Out
           </Text>
         </Flex>
 
-        <Text textAlign={'center'}>
+        <Text textAlign={"center"}>
           <Link
             as={RouterLink}
-            to='/tasks'
-            color={'blue'}
-            _hover={{textDecor: 'none'}}
+            to="/tasks"
+            color={"blue"}
+            _hover={{ textDecor: "none" }}
           >
             Show Tasks
           </Link>

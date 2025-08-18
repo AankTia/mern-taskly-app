@@ -25,7 +25,7 @@ export default function Profile() {
     register,
     handleSubmit,
     resetField,
-    formState: { error, isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
       avatar: user.avatar,
@@ -34,7 +34,7 @@ export default function Profile() {
     }
   });
 
-  const doSubmit = async = values => {
+  const doSubmit = async values => {
     try {
       // When the request is successful, we reset the password field from the form, 
       // update the user context data, and show a success toast

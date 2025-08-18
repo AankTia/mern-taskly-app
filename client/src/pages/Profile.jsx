@@ -34,7 +34,7 @@ export default function Profile() {
     }
   });
 
-  const doDubmit = async = values => {
+  const doSubmit = async = values => {
     try {
       // When the request is successful, we reset the password field from the form, 
       // update the user context data, and show a success toast

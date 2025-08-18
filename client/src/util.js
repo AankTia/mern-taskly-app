@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 
-export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
-
 export const useLocalStorage = (key, defaultValue) => {
   const [value, setValue] = useState(() => {
     const currentValue = localStorage.getItem(key);
@@ -20,3 +17,5 @@ export const useLocalStorage = (key, defaultValue) => {
 
   return [value, setValue];
 };
+
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;

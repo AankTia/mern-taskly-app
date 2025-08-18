@@ -122,7 +122,7 @@ export default function Profile() {
             />
           </Center>
 
-          <FormControl isInvalid={useFormErrorStyles.username}>
+          <FormControl isInvalid={errors.username}>
             <input 
               id='username'
               type='text'

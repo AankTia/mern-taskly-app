@@ -17,6 +17,7 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
+import TasksSkeleton from "../_skeletons/TasksSkeleton";
 
 export default function Tasks() {
   const { user } = useUser();
@@ -32,6 +33,10 @@ export default function Tasks() {
     fetchTasks();
   }, []);
 
+  if (!tasks) {
+    return <TasksSkeleton />;
+  }
+  
   return (
     <Box p={5} maxW={"3lg"} mx={"auto"}>
       <Heading

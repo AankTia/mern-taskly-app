@@ -22,6 +22,7 @@ export default function SingleTask() {
   const [task, setTask] = useState();
   const { taskId } = useParams();
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -32,7 +33,7 @@ export default function SingleTask() {
       setTask(data);
     };
     fetchTask();
-  });
+  }, []);
 
   const handleDeleteTask = async () => {
     const res = await fetch(`${API_BASE_URL}/tasks/${taskId}`, {

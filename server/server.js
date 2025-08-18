@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import fileUpload from "express-fileupload";
 import cldRouter from "./routes/cloudinary.route.js";
+import taskRouter from "./routes/task.routes.js";
 
 const app = express();
 const PORT = 8000;
@@ -24,6 +25,7 @@ app.use(
 app.use('/api/v1/auth', authRouter);
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/image", cldRouter);
+app.use("/api/v1/tasks", taskRouter);
 
 app.use((req, res) => {
   res.status(404).json({

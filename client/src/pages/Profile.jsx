@@ -1,4 +1,5 @@
-import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { API_BASE_URL } from "../util";
@@ -20,13 +21,16 @@ import {
 } from "@chakra-ui/react";
 // import { useDisclosure } from "@chakra-ui/react";
 import DeleteConfirmation from "../components/DeleteConfirmation";
+import { AvatarUploader } from "../components/AvatarUploader";
 
 export default function Profile() {
   const navigate = useNavigate();
   const { user, updateUser } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [ files, setFiles ] = useState(false);
 
   const {
+    control,
     register,
     handleSubmit,
     resetField,
@@ -41,6 +45,13 @@ export default function Profile() {
 
   const doSubmit = async (values) => {
     try {
+      if (files.length > 0) {
+        const newUrl = await handleFileUpload(files);
+
+        if (newUrl) {
+          values.avatar = newUrl;
+        }
+      }
       // When the request is successful, we reset the password field from the form,
       // update the user context data, and show a success toast
       const res = await fetch(`${API_BASE_URL}/users/update${user._id}`, {
@@ -99,6 +110,26 @@ export default function Profile() {
     }
   };
 
+  const handleFileUpload = async (files) => {
+    const formData = new FormData();
+    formData.append("image", files[0]);
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/image/upload`, {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+
+      const response = await res.json();
+
+      return response.imageUrl;
+    } catch (error) {
+      console.log(error);
+      Throw(error);
+    }
+  };
+
   return (
     <Box p="3" maxW="lg" mx="auto">
       <DeleteConfirmation
@@ -119,16 +150,22 @@ export default function Profile() {
       <form onSubmit={handleSubmit(doSubmit)}>
         <Stack gap="4">
           <Center>
-            <Image
-              alt="profile"
-              rounded="full"
-              h="24"
-              w="24"
-              objectFit="cover"
-              cursor="pointer"
-              mt="2"
-              src={user.avatar}
-            />
+            <form onSubmit={handleSubmit(doSubmit)}>
+              <Stack gap="4">
+                <Controller 
+                  name="avatar"
+                  control={control}
+                  rules={ {required: true}}
+                  render={({ field }) => (
+                    <AvatarUploader
+                      onFieldChange={field.onChange}
+                      imageUrl={field.value}
+                      setFiles={setFiles}
+                    />
+                  )}
+                />
+              </Stack>
+            </form>
           </Center>
           <FormControl isInvalid={errors.username}>
             <Input

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Center, Inpit, Image, Tooltip, Input } from '@chakra-ui/react';
+import { Center, Image, Tooltip, Input } from '@chakra-ui/react';
 
 export function AvatarUploader({ imageUrl, onFieldChange, setFile, setAvatar }) {
   const convertFileToUrl = file => URL.createObjectURL(file);

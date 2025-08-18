@@ -12,12 +12,12 @@ export default function DeleteConfirmation({
   alertTitle,
   handleClick,
   isOpen,
-  onClode,
+  onClose,
 }) {
   return (
     <AlertDialog
       isOpen={isOpen}
-      onClose={onClode}>
+      onClose={onClose}>
       <AlertDialogOverlay>
         <AlertDialogContent>
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
@@ -29,7 +29,7 @@ export default function DeleteConfirmation({
           </AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button onClick={onClode}>Cancel</Button>
+            <Button onClick={onClose}>Cancel</Button>
             <Button colorScheme={'red'} onClick={handleClick} ml={3}>
               Delete
             </Button>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
 import { API_BASE_URL } from "../util.js";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   Badge,
   Box,
@@ -23,22 +23,27 @@ import Pagination from "../components/pagination.jsx";
 export default function Tasks() {
   const { user } = useUser();
   const [tasks, setTasks] = useState();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [itemCount, setItemCount] = useState(0);
+  const page = parseInt(searchParams.get("page") || 1);
 
   useEffect(() => {
     const fetchTasks = async () => {
+      const query = searchParams.size ? "?" + searchParams.toString() : "";
       const res = await fetch(`${API_BASE_URL}/tasks/user/${user._id}`, {
         credentials: "include",
       });
-      const { tasks } = await res.json();
+      const { tasks, taskCount } = await res.json();
       setTasks(tasks);
+      setItemCount(taskCount);
     };
     fetchTasks();
-  }, []);
+  }, [searchParams]);
 
   if (!tasks) {
     return <TasksSkeleton />;
   }
-  
+
   return (
     <Box p={5} maxW={"3lg"} mx={"auto"}>
       <Heading
@@ -105,7 +110,7 @@ export default function Tasks() {
           </Tbody>
         </Table>
       </TableContainer>
-      <Pagination itemCount={100} pageSize={4} currentPage={3} />
+      <Pagination itemCount={itemCount} pageSize={4} currentPage={page} />
     </Box>
   );
 }

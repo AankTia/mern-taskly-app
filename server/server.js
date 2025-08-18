@@ -5,12 +5,15 @@ import { errorHandler } from "./libs/middleware.js";
 import authRouter from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import fileUpload from "express-fileupload";
+import cldRouter from "./routes/cloudinary.route.js";
 
 const app = express();
 const PORT = 8000;
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(fileUpload());
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "http://localhost:5173",
@@ -20,6 +23,7 @@ app.use(
 
 app.use('/api/v1/auth', authRouter);
 app.use("/api/v1/users", userRoute);
+app.use("/api/v1/image", cldRouter);
 
 app.use((req, res) => {
   res.status(404).json({

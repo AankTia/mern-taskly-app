@@ -1,0 +1,124 @@
+# MERN Learning Project 🚀
+
+[![Node.js](https://img.shields.io/badge/Node.js-18.x-green?logo=node.js)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-18-blue?logo=react)](https://react.dev/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-6.x-darkgreen?logo=mongodb)](https://www.mongodb.com/)
+[![Express](https://img.shields.io/badge/Express.js-4.x-lightgrey?logo=express)](https://expressjs.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+I’m learning how to build a full-stack web application using the **MERN stack (MongoDB, Express.js, React, Node.js)** by following the _MERN Stack Web Development For Beginners_ book.
+
+A full-stack web application built with the **MERN stack** (MongoDB, Express.js, React, Node.js).
+This project demonstrates **authentication, CRUD operations, and API integration** with a modern frontend UI.
+
+---
+
+## 📌 Features
+
+- 📖 Hands-on practice with **backend APIs** using Node.js & Express
+- 🔐 **User Authentication** (JWT-based login & registration)
+- 📝 **CRUD Operations** (Create, Read, Update, Delete)
+- 📊 **RESTful API** with Express & MongoDB
+- 🎨 **Responsive UI** built with React
+- ⚡ **State Management** using Context API
+- 🗄 **MongoDB database integration**
+
+---
+
+## 🛠 Tech Stack
+
+**Frontend:**
+
+- React.js (Vite)
+- React Router
+- Fetch API
+- Chakra UI
+
+**Backend:**
+
+- Node.js
+- Express.js
+- MongoDB
+- JWT for Authentication
+- bcrypt for Password Hashing
+
+---
+
+## 📂 Project Structure
+
+```
+project-root/
+│── client/         # React frontend
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+│── server/         # Node.js backend
+│   ├── models/     # Mongoose schemas
+│   ├── routes/     # API routes
+│   ├── controllers/
+│   ├── config/
+│   ├── server.js
+│   └── package.json
+│
+│── README.md
+│── .env.example
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/AankTia/mern-taskly-app.git
+cd mern-project
+```
+
+### 2. Setup Backend (Server)
+
+```bash
+cd server
+npm install
+cp .env.example .env   # Update your MongoDB URI & JWT_SECRET
+npm run dev
+```
+
+### 3. Setup Frontend (Client)
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+### 4. Run MongoDB in Docker
+
+```bash
+docker compose up
+```
+
+### 5. Populate Seed Data
+
+```bash
+cd server
+node seed.js
+```
+
+### 6. Access App
+
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:8000/api`
+
+---
+
+## 🔑 Environment Variables
+
+Create a `.env` file inside the `server/` folder:
+
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/mern_app
+JWT_SECRET=your_secret_key
+```

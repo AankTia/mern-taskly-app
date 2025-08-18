@@ -24,6 +24,30 @@ export default function SignIn() {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const doSubmit = async (values) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/signin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await res.json();
+      if (res.status === 200) {
+        toast.success("Signed in successfully");
+        updateUser(data);
+        navigate("/profile");
+      } else {
+        toast.error(data.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occurred while signing in");
+    }
+  };
+
   return (
     <Box p="3" maxW="lg" mx={"auto"}>
       <Heading
@@ -79,27 +103,3 @@ export default function SignIn() {
     </Box>
   );
 }
-
-const doSubmit = async (values) => {
-  try {
-    const res = await fetch(`${API_BASE_URL}/auth/signin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-
-    const data = await res.json();
-    if (res.status === 200) {
-      toast.success("Signed in successfully");
-      updateUser(data);
-      navigate("/profile");
-    } else {
-      toast.error(data.message || "Something went wrong");
-    }
-  } catch (error) {
-    console.log(error);
-    toast.error("An error occurred while signing in");
-  }
-};

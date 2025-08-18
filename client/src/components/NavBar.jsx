@@ -2,7 +2,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useUser } from "../context/UserContext.jsx";
 import { API_BASE_URL } from "../util.js";
-import { Box, Flex, Menu, Spacer, Link, Button, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Menu, Spacer, Link, Button, Image, Text, Portal } from "@chakra-ui/react";
 
 export default function NavBar() {
   const { user, updateUser } = useUser();
@@ -41,7 +41,27 @@ export default function NavBar() {
 
         <Box>
           {user ? (
-            <Text>User exists, show profile and sign out options</Text>
+            <Menu.Root>
+              <Menu.Trigger asChild>
+                <Button variant="outline" size="sm">
+                  <Image
+                    boxSize="40px"
+                    borderRadius="full"
+                    src={user.avatar}
+                    alt={user.username}
+                  />
+                </Button>
+              </Menu.Trigger>
+              <Portal>
+                <Menu.Positioner>
+                  <Menu.Content>
+                    <Menu.Item value="profile">Profile</Menu.Item>
+                    <Menu.Item value="new-file">Tasks.</Menu.Item>
+                    <Menu.Item value="new-win">Sign Out</Menu.Item>
+                  </Menu.Content>
+                </Menu.Positioner>
+              </Portal>
+            </Menu.Root>
           ) : (
             <Link as={RouterLink} to="/signin">
               Sign In

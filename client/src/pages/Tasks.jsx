@@ -18,6 +18,7 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 import TasksSkeleton from "../_skeletons/TasksSkeleton";
+import Pagination from "../components/pagination.jsx";
 
 export default function Tasks() {
   const { user } = useUser();
@@ -50,20 +51,20 @@ export default function Tasks() {
         Task Todo
       </Heading>
 
-      <Flex justify='space-between' mb='3'>
-        <Box w='100px'>
+      <Flex justify="space-between" mb="3">
+        <Box w="100px">
           <Select placeholder="All">
-            <option value='open'>Open</option>
-            <option value='done'>Done</option>
+            <option value="open">Open</option>
+            <option value="done">Done</option>
           </Select>
         </Box>
 
         <Button
           colorScheme="green"
-          textTransform='uppercase'
-          fontWeight='semibold'
+          textTransform="uppercase"
+          fontWeight="semibold"
         >
-          <Link to='/create-task'>Create New Task</Link>
+          <Link to="/create-task">Create New Task</Link>
         </Button>
       </Flex>
 
@@ -104,6 +105,7 @@ export default function Tasks() {
           </Tbody>
         </Table>
       </TableContainer>
+      <Pagination itemCount={100} pageSize={4} currentPage={3} />
     </Box>
   );
 }
